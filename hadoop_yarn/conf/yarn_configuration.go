@@ -13,6 +13,7 @@ const (
 const (
 	YARN_PREFIX                      = "yarn."
 	RM_PREFIX                        = YARN_PREFIX + "resourcemanager."
+	NM_PREFIX						 = YARN_PREFIX + "nodemanager."
 	RM_ADDRESS                       = RM_PREFIX + "address"
 	DEFAULT_RM_ADDRESS               = "0.0.0.0:8032"
 	RM_SCHEDULER_ADDRESS             = RM_PREFIX + "scheduler.address"
@@ -21,6 +22,8 @@ const (
 	DEFAULT_RM_SCHEDULER_ADDRESS     = "0.0.0.0:8030"
 	RM_AM_EXPIRY_INTERVAL_MS         = YARN_PREFIX + "am.liveness-monitor.expiry-interval-ms"
 	DEFAULT_RM_AM_EXPIRY_INTERVAL_MS = 600000
+	DEFAULT_NM_UTIL_TRACKER_ADDRESS  = "node005:8055"
+	NM_UTIL_TRACKER_ADDRESS			 = NM_PREFIX + "nm.util.tracker.address"
 )
 
 type yarn_configuration struct {
@@ -31,10 +34,12 @@ type YarnConfiguration interface {
 	GetRMAddress() (string, error)
 	GetRMSchedulerAddress() (string, error)
 	GetRMAdminAddress() (string, error)
+	GetNMResourceUtilizationTrackerAddress() (string, error)
 
 	SetRMAddress(address string) error
 	SetRMAdminAddress(address string) error
 	SetRMSchedulerAddress(address string) error
+	SetNMResourceUtilizationTrackerAddress(address string) error
 
 	Get(key string, defaultValue string) (string, error)
 	GetInt(key string, defaultValue int) (int, error)
@@ -63,6 +68,10 @@ func (yarn_conf *yarn_configuration) GetRMSchedulerAddress() (string, error) {
 	return yarn_conf.conf.Get(RM_SCHEDULER_ADDRESS, DEFAULT_RM_SCHEDULER_ADDRESS)
 }
 
+func (yarn_conf *yarn_configuration) GetNMResourceUtilizationTrackerAddress() (string, error) {
+	return yarn_conf.conf.Get(NM_UTIL_TRACKER_ADDRESS, DEFAULT_NM_UTIL_TRACKER_ADDRESS)
+}
+
 func (yarn_conf *yarn_configuration) Set(key string, value string) error {
 	return yarn_conf.conf.Set(key, value)
 }
@@ -81,6 +90,10 @@ func (yarn_conf *yarn_configuration) SetRMAdminAddress(address string) error {
 
 func (yarn_conf *yarn_configuration) SetRMSchedulerAddress(address string) error {
 	return yarn_conf.conf.Set(RM_SCHEDULER_ADDRESS, address)
+}
+
+func (yarn_conf *yarn_configuration) SetNMResourceUtilizationTrackerAddress(address string) error {
+	return yarn_conf.conf.Set(NM_UTIL_TRACKER_ADDRESS, address)
 }
 
 func NewYarnConfiguration() (YarnConfiguration, error) {
