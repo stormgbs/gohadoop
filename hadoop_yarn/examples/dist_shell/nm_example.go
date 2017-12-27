@@ -23,6 +23,15 @@ func main() {
 		log.Fatal("rmClient.UpdateNodeResource: ", err)
 	} else {
 		nodeStatus := resp.NodeStatus
-		log.Println(nodeStatus)
+		containersStatus := nodeStatus.ContainersStatuses
+		size := len(containersStatus)
+		log.Println("container status size:", size)
+		if size == 0 {
+			log.Println(nodeStatus)
+		}
+		for _, item := range containersStatus {
+			log.Println(item.ContainerId, item.Capability, item.Utilization, item.Priority)
+			log.Println(item.Priority.Priority)
+		}
 	}
 }

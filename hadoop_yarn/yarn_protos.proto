@@ -466,6 +466,9 @@ message ContainerStatusProto {
   optional ContainerStateProto state = 2;
   optional string diagnostics = 3 [default = "N/A"];
   optional int32 exit_status = 4 [default = -1000];
+  optional ResourceProto capability = 5;
+  optional ResourceUtilizationProto utilization = 6;
+  optional PriorityProto priority = 7;
 }
 
 enum ContainerExitStatusProto {
@@ -507,4 +510,10 @@ message StringStringMapProto {
 message StringBytesMapProto {
   optional string key = 1;
   optional bytes value = 2;
+}
+
+message ResourceUtilizationProto {
+  optional int32 pmem = 1;
+  optional int32 vmem = 2;
+  optional float cpu = 3;
 }

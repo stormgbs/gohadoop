@@ -22,7 +22,7 @@ const (
 	DEFAULT_RM_SCHEDULER_ADDRESS     = "0.0.0.0:8030"
 	RM_AM_EXPIRY_INTERVAL_MS         = YARN_PREFIX + "am.liveness-monitor.expiry-interval-ms"
 	DEFAULT_RM_AM_EXPIRY_INTERVAL_MS = 600000
-	DEFAULT_NM_UTIL_TRACKER_ADDRESS  = "node005:8055"
+	DEFAULT_NM_UTIL_TRACKER_ADDRESS  = "0.0.0.0:8055"
 	NM_UTIL_TRACKER_ADDRESS          = NM_PREFIX + "nm.util.tracker.address"
 )
 
