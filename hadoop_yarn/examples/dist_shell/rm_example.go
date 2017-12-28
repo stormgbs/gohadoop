@@ -18,15 +18,16 @@ func main() {
 
 	// Some useful information
 	var (
-		host string = "node004"
+		//host string = "node004"
 		//TODO: Get port of node from RM
-		port     int32 = 31233
-		memoryMB int32 = 8192
+		//port     int32 = 31233
+		memoryMB int32 = 4096
 		vcores   int32 = 4
 	)
 
 	// Update node resource
-	err = rmClient.UpdateNodeResource(host, port, memoryMB, vcores)
+	//err = rmClient.UpdateNodeResource(host, port, memoryMB, vcores)
+	err = rmClient.UpdateResourceOfGivenNode(memoryMB, vcores)
 	if err != nil {
 		log.Fatal("rmClient.UpdateNodeResource: ", err)
 	}

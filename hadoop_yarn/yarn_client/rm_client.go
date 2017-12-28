@@ -1,6 +1,11 @@
 package yarn_client
 
 import (
+	"errors"
+	"fmt"
+	"strconv"
+	"strings"
+
 	"github.com/hortonworks/gohadoop/hadoop_yarn"
 	yarn_conf "github.com/hortonworks/gohadoop/hadoop_yarn/conf"
 )
@@ -31,4 +36,17 @@ func (c *RMClient) UpdateNodeResource(nodeHost string, nodePort int32, memoryMB 
 	}
 	response := hadoop_yarn.UpdateNodeResourceResponseProto{}
 	return c.client.UpdateNodeResource(&request, &response)
+}
+
+func (c *RMClient) UpdateResourceOfGivenNode(memoryMB int32, virtualCpuCores int32) error {
+	nodeId, _ := c.conf.Get(yarn_conf.NM_ADDRESS, yarn_conf.DEFAULT_NM_ADDRESS)
+	hostAndPort := strings.Split(nodeId, ":")
+	if len(hostAndPort) != 2 {
+		return errors.New("illegal nodeId format[host:port].nodeId=" + nodeId)
+	}
+	port, err := strconv.Atoi(hostAndPort[1])
+	if err != nil {
+		return errors.New(fmt.Sprintf("%s%d", "number format error.port=", port))
+	}
+	return c.UpdateNodeResource(hostAndPort[0], int32(port), memoryMB, virtualCpuCores)
 }

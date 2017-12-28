@@ -24,6 +24,8 @@ const (
 	DEFAULT_RM_AM_EXPIRY_INTERVAL_MS = 600000
 	DEFAULT_NM_UTIL_TRACKER_ADDRESS  = "0.0.0.0:8055"
 	NM_UTIL_TRACKER_ADDRESS          = NM_PREFIX + "nm.util.tracker.address"
+	NM_ADDRESS                       = NM_PREFIX + "address"
+	DEFAULT_NM_ADDRESS               = "0.0.0.0:8050"
 )
 
 type yarn_configuration struct {
